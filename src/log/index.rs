@@ -24,12 +24,20 @@ impl Index {
         Ok(Index { file: f, size })
     }
 
-    pub fn read(&mut self, index: u32) -> anyhow::Result<(u32, u64)> {
+    pub fn read(&mut self, index: i32) -> anyhow::Result<(u32, u64)> {
         if self.size == 0 {
             return Ok((0, 0));
         }
 
-        let pos = index as u64 * ENT_WIDTH;
+        let rec_num;
+        if index == -1 {
+            let t : u32 = (self.size / ENT_WIDTH).try_into()?;
+            rec_num = t - 1;
+        } else {
+            rec_num = index.try_into()?;
+        }
+
+        let pos = rec_num as u64 * ENT_WIDTH;
 
         if self.size < pos {
             return Err(From::from(Error::from(ErrorKind::UnexpectedEof)));

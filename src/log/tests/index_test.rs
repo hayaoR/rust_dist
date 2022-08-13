@@ -29,7 +29,7 @@ fn test_read_write() {
         for entry in &entries {
             index.write(entry.0, entry.1).unwrap();
 
-            let (_, pos) = index.read(entry.0).unwrap();
+            let (_, pos) = index.read(entry.0.try_into().unwrap()).unwrap();
 
             assert_eq!(pos, entry.1);
         }
