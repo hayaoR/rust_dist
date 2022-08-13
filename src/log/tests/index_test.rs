@@ -11,7 +11,6 @@ fn test_read_write() {
     let dir = tempdir().unwrap();
     let file_path = dir.path().join("my_temporary");
 
-
     let config = Config {
         segment: Segment {
             max_store_bytes: 0,
@@ -21,7 +20,12 @@ fn test_read_write() {
     };
 
     {
-        let file = OpenOptions::new().read(true).write(true).create(true).open(&file_path).unwrap();
+        let file = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .open(&file_path)
+            .unwrap();
 
         let mut index = Index::new_index(file, &config).unwrap();
 
@@ -36,7 +40,11 @@ fn test_read_write() {
         }
     }
 
-    let file = OpenOptions::new().read(true).write(true).open(&file_path).unwrap();
+    let file = OpenOptions::new()
+        .read(true)
+        .write(true)
+        .open(&file_path)
+        .unwrap();
 
     let mut index = Index::new_index(file, &config).unwrap();
 

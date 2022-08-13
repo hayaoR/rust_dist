@@ -1,2 +1,2 @@
-mod store_test;
 mod index_test;
+mod store_test;

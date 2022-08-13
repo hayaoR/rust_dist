@@ -1,13 +1,13 @@
+use byteorder::BigEndian;
+use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::fs::File;
-use std::io::{Error, ErrorKind, SeekFrom, Seek};
-use byteorder::{BigEndian};
-use byteorder::{WriteBytesExt, ReadBytesExt};
+use std::io::{Error, ErrorKind, Seek, SeekFrom};
 
 use super::config::Config;
 
-const OFF_WIDTH : u64 = 4;
-const POS_WIDTH : u64 = 8;
-const ENT_WIDTH : u64 = OFF_WIDTH + POS_WIDTH;
+const OFF_WIDTH: u64 = 4;
+const POS_WIDTH: u64 = 8;
+const ENT_WIDTH: u64 = OFF_WIDTH + POS_WIDTH;
 
 pub struct Index {
     file: File,
@@ -21,10 +21,7 @@ impl Index {
 
         f.set_len(c.segment.max_index_bytes)?;
 
-        Ok(Index {
-            file: f,
-            size,
-        })
+        Ok(Index { file: f, size })
     }
 
     pub fn read(&mut self, index: u32) -> anyhow::Result<(u32, u64)> {

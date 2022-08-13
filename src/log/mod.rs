@@ -1,8 +1,7 @@
-pub mod store;
 mod config;
-mod segment;
 mod index;
-
+mod segment;
+pub mod store;
 
 #[cfg(test)]
 mod tests;

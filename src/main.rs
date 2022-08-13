@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use axum::{
-    routing::get,
-    Extension, Router,
+use axum::{routing::get, Extension, Router};
+use proglog::{
+    record::Log,
+    routes::{consume::consume, produce::produce},
 };
-use proglog::{record::Log, routes::{consume::consume, produce::produce}};
 
 #[tokio::main]
 async fn main() {

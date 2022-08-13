@@ -1,9 +1,9 @@
-use std::sync::Mutex;
 use serde::{Deserialize, Serialize};
+use std::sync::Mutex;
 
-#[derive(Serialize ,Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Record {
-    #[serde(with="serde_bytes")]
+    #[serde(with = "serde_bytes")]
     value: Vec<u8>,
     offset: Option<usize>,
 }
@@ -15,7 +15,7 @@ pub struct Log {
 impl Log {
     pub fn new() -> Self {
         Log {
-            records: Mutex::new(Vec::new())
+            records: Mutex::new(Vec::new()),
         }
     }
 

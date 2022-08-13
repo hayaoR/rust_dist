@@ -1,8 +1,8 @@
+use byteorder::BigEndian;
+use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::io::prelude::*;
 use std::io::SeekFrom;
 use std::{fs::File, sync::Mutex};
-use byteorder::{BigEndian};
-use byteorder::{WriteBytesExt, ReadBytesExt};
 
 pub const LEN_WIDTH: u64 = 8;
 
@@ -11,14 +11,13 @@ pub struct Store {
     size: u64,
 }
 
-
 impl Store {
     pub fn new(f: File) -> anyhow::Result<Self> {
         let metadata = f.metadata()?;
 
         Ok(Store {
-                file: Mutex::new(f),
-                size: metadata.len(),
+            file: Mutex::new(f),
+            size: metadata.len(),
         })
     }
 
@@ -42,11 +41,9 @@ impl Store {
         let size = f.read_u64::<BigEndian>()?;
 
         let mut buf = vec![0; size as usize];
-        f.seek(SeekFrom::Start(pos+LEN_WIDTH))?;
+        f.seek(SeekFrom::Start(pos + LEN_WIDTH))?;
         f.read_exact(&mut buf)?;
 
         Ok(buf)
-
     }
 }
-
