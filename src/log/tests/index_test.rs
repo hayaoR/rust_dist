@@ -1,9 +1,6 @@
 use std::fs::OpenOptions;
 
-use crate::log::{
-    config::{Config, Segment},
-    index::Index,
-};
+use crate::log::{config::Config, index::Index};
 use tempfile::tempdir;
 
 #[test]
@@ -12,11 +9,9 @@ fn test_read_write() {
     let file_path = dir.path().join("my_temporary");
 
     let config = Config {
-        segment: Segment {
-            max_store_bytes: 0,
-            max_index_bytes: 1024,
-            initial_offset: 0,
-        },
+        max_store_bytes: 0,
+        max_index_bytes: 1024,
+        initial_offset: 0,
     };
 
     {

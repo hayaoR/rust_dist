@@ -19,7 +19,7 @@ impl Index {
         let metadata = f.metadata()?;
         let size = metadata.len();
 
-        f.set_len(c.segment.max_index_bytes)?;
+        f.set_len(c.max_index_bytes)?;
 
         Ok(Index { file: f, size })
     }
