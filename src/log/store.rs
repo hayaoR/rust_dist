@@ -27,7 +27,7 @@ impl Store {
 
         f.write_u64::<BigEndian>(p.len() as u64)?;
 
-        f.write(p)?;
+        f.write_all(p)?;
 
         self.size += p.len() as u64 + LEN_WIDTH;
 

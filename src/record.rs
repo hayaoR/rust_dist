@@ -36,3 +36,9 @@ impl Log {
         Ok(records[offset].clone())
     }
 }
+
+impl Default for Log {
+    fn default() -> Self {
+        Self::new()
+    }
+}
