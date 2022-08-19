@@ -8,7 +8,7 @@ pub const LEN_WIDTH: u64 = 8;
 
 pub struct Store {
     file: Mutex<File>,
-    size: u64,
+    pub size: u64,
 }
 
 impl Store {

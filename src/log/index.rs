@@ -7,11 +7,11 @@ use super::config::Config;
 
 const OFF_WIDTH: u64 = 4;
 const POS_WIDTH: u64 = 8;
-const ENT_WIDTH: u64 = OFF_WIDTH + POS_WIDTH;
+pub const ENT_WIDTH: u64 = OFF_WIDTH + POS_WIDTH;
 
 pub struct Index {
     file: File,
-    size: u64,
+    pub size: u64,
 }
 
 impl Index {
@@ -24,18 +24,17 @@ impl Index {
         Ok(Index { file: f, size })
     }
 
-    pub fn read(&mut self, index: i32) -> anyhow::Result<(u32, u64)> {
+    pub fn read(&mut self, index: i64) -> anyhow::Result<(u32, u64)> {
         if self.size == 0 {
-            return Ok((0, 0));
+            return Err(From::from(Error::from(ErrorKind::UnexpectedEof)));
         }
 
-        let rec_num;
-        if index == -1 {
-            let t : u32 = (self.size / ENT_WIDTH).try_into()?;
-            rec_num = t - 1;
+        let rec_num = if index == -1 {
+            let t: u32 = (self.size / ENT_WIDTH).try_into()?;
+            t - 1
         } else {
-            rec_num = index.try_into()?;
-        }
+            index.try_into()?
+        };
 
         let pos = rec_num as u64 * ENT_WIDTH;
 
@@ -66,7 +65,7 @@ impl Index {
         Ok(())
     }
 
-    fn is_maxed(&self) -> anyhow::Result<bool> {
+    pub fn is_maxed(&self) -> anyhow::Result<bool> {
         let metadata = self.file.metadata()?;
         Ok(metadata.len() < self.size + ENT_WIDTH)
     }

@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package log.v1;
+
+message PRecord {
+    bytes value = 1;
+    uint64 offset = 2;
+}
+

@@ -4,8 +4,8 @@ use std::sync::Mutex;
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Record {
     #[serde(with = "serde_bytes")]
-    value: Vec<u8>,
-    offset: Option<usize>,
+    pub value: Vec<u8>,
+    pub offset: Option<u64>,
 }
 
 pub struct Log {
@@ -19,9 +19,9 @@ impl Log {
         }
     }
 
-    pub fn append(&self, mut record: Record) -> anyhow::Result<usize> {
+    pub fn append(&self, mut record: Record) -> anyhow::Result<u64> {
         let mut records = self.records.lock().unwrap();
-        let length = records.len();
+        let length = records.len().try_into()?;
         record.offset = Some(length);
         records.push(record);
 
