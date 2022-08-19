@@ -15,7 +15,7 @@ fn test_store_append_read() {
 
 fn test_append(store: &mut Store) {
     for i in 1..4 {
-        let (n, pos) = store.append(ARR).unwrap();
+        let (n, pos) = store.append(ARR.to_vec()).unwrap();
         assert_eq!(pos + n, WIDTH * i);
     }
 }

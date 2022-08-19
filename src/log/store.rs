@@ -21,13 +21,13 @@ impl Store {
         })
     }
 
-    pub fn append(&mut self, p: &[u8]) -> anyhow::Result<(u64, u64)> {
+    pub fn append(&mut self, p: Vec<u8>) -> anyhow::Result<(u64, u64)> {
         let mut f = self.file.lock().unwrap();
         let pos = self.size;
 
         f.write_u64::<BigEndian>(p.len() as u64)?;
 
-        f.write_all(p)?;
+        f.write_all(&p)?;
 
         self.size += p.len() as u64 + LEN_WIDTH;
 
