@@ -1,3 +1,4 @@
+use std::fmt::format;
 use std::fs::remove_file;
 use std::path::PathBuf;
 use std::{fs::OpenOptions, path::Path};
@@ -14,9 +15,9 @@ pub mod record {
 }
 
 pub struct Segment {
-    store: Store,
+    pub store: Store,
     index: Index,
-    base_offset: u64,
+    pub base_offset: u64,
     pub next_offset: u64,
     config: Config,
     store_path: PathBuf,
@@ -34,7 +35,7 @@ impl Segment {
             .write(true)
             .append(true)
             .create(true)
-            .open(dir.as_ref().join("baseOffset.store"))?;
+            .open(dir.as_ref().join(format!("{}.store", base_offset)))?;
 
         let store = Store::new(store_file)?;
 
@@ -42,7 +43,7 @@ impl Segment {
             .read(true)
             .write(true)
             .create(true)
-            .open(dir.as_ref().join("baseOffset.index"))?;
+            .open(dir.as_ref().join(format!("{}.index", base_offset)))?;
 
         let mut index = Index::new_index(index_file, &config)?;
 
@@ -60,8 +61,8 @@ impl Segment {
             base_offset,
             next_offset,
             config,
-            store_path: dir.as_ref().join("baseOffset.store"),
-            index_path: dir.as_ref().join("baseOffset.index"),
+            store_path: dir.as_ref().join(format!("{}.store", base_offset)),
+            index_path: dir.as_ref().join(format!("{}.index", base_offset)),
         })
     }
 

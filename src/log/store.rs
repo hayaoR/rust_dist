@@ -46,4 +46,12 @@ impl Store {
 
         Ok(buf)
     }
+
+    pub fn read_at(&mut self, buf: &mut [u8], off: u64) -> std::io::Result<usize> {
+        let mut f = self.file.lock().unwrap();
+
+        f.seek(SeekFrom::Start(off))?;
+        let size = f.read(buf)?;
+        Ok(size)
+    }
 }
