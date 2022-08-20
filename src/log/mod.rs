@@ -150,7 +150,7 @@ impl Log {
         let s = Segment::new_segment(dir, off, config)?;
 
         segments.segments.push(s);
-        segments.active_segment_index = segments.segments.len();
+        segments.active_segment_index = segments.segments.len() - 1;
 
         Ok(())
     }

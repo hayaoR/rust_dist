@@ -1,4 +1,4 @@
-#[derive(Clone)]
+#[derive(Clone, Default)]
 pub struct Config {
     pub max_store_bytes: u64,
     pub max_index_bytes: u64,

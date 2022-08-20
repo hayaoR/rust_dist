@@ -1,4 +1,3 @@
-use std::fmt::format;
 use std::fs::remove_file;
 use std::path::PathBuf;
 use std::{fs::OpenOptions, path::Path};
